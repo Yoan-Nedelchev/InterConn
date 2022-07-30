@@ -1,25 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+
+import { useState } from 'react'
+
+import Navigation from './components/navComponent/Navigation'
+import HomePage from './components/homePage/HomePage'
+import UserLogin from './components/userLogIn/UserLogin'
+import UserRegistration from './components/userRegister/UserRegistration'
+
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+} from 'react-router-dom'
+
+import { UserProvider } from './contexts/userContext'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserProvider>
+      <div className="App">
+        <BrowserRouter>
+          <header className="App-header">
+            <Navigation />
+          </header>
+          <Routes>
+            <Route path="/" c element={<HomePage />} />
+            <Route path="/register" element={<UserRegistration />} />
+            <Route path="/login" element={<UserLogin/>} />
+          </Routes>
+          <footer>
+          </footer>
+        </BrowserRouter>
+      </div >
+    </UserProvider>
   );
-}
+};
 
 export default App;

@@ -1,0 +1,59 @@
+a {
+    color: black
+}
+
+.nav-bar {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    list-style-type: none;
+    border: 2px solid navy;
+    border-top: none;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    color: black;
+    margin-top: 0px
+
+}
+
+.nav-img {
+    margin-right: auto;
+}
+
+.button {
+    margin-left: 20px;
+    font-weight: 500;
+    cursor: pointer;
+      
+}
+
+.login, .register {
+
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.login {
+    border: 3px solid navy;
+    border-radius: 15px;
+    color: navy;
+}
+
+.register {
+    background-color: navy;
+    color: white;
+    border-radius: 15px;
+    border: 3px solid navy;
+    font-weight: 400;
+}
+
+a {
+    color: none
+}
+
+.greeting {
+    font-weight: 700;
+    margin-left: 20px;
+    font-style: italic;
+}
