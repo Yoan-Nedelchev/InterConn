@@ -1,0 +1,43 @@
+div {
+    text-align: center;
+}
+
+.category {
+    background-color: navy;
+    margin-top: 15px;
+    border-radius: 15px;
+    list-style: none;
+    display: inline;
+    font-size: 18px;
+    width: 300px;
+    padding: 10px 0px;
+    color: white;
+}
+
+.category:hover {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(101,9,121,1) 35%, rgba(0,212,255,1) 100%);
+}
+
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0px;
+    margin-top: 0px;
+}
+
+.container a {
+    color: white;
+    font-weight: 300;
+}
+
+.categories-title {
+    color: black;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 0px;
+}

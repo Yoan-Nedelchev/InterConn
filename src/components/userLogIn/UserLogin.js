@@ -1,12 +1,12 @@
 import cx from "classnames"
 import styles from './UserLogin.module.css'
 import * as api from '../../services/api/data'
-import { UserContext } from "../../contexts/userContext"
+import { MainContext } from "../../contexts/mainContext"
 import {useContext} from "react"
 import { useNavigate } from 'react-router-dom'
 
 const UserLogin = () => {
-    const { userData, setUserData } = useContext(UserContext);
+    const { userData, setUserData } = useContext(MainContext);
     const nav = useNavigate();
 
     const onLogin = async (e) => {

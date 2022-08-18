@@ -3,11 +3,16 @@
 .App {
     max-width: 90%;
     margin: auto;
-    font-size: 18px;
+    font-size: 16px;
     font-family: Roboto;
 
 }
 
 a {
     text-decoration: none
+}
+
+main {
+ position: relative;
+ min-height: 70vh;
 }

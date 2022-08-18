@@ -13,12 +13,16 @@ a {
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     color: black;
-    margin-top: 0px
+    margin-top: 0px;
+    margin-bottom: 15px;
 
 }
 
-.nav-img {
+.public-btns {
     margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .button {
@@ -56,4 +60,8 @@ a {
     font-weight: 700;
     margin-left: 20px;
     font-style: italic;
+}
+
+.categories-btn {
+    margin-right: auto;
 }

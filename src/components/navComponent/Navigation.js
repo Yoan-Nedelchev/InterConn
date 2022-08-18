@@ -4,12 +4,12 @@ import styles from './Navigation.module.css'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
-import { UserContext } from "../../contexts/userContext"
+import { MainContext } from "../../contexts/mainContext"
 import { useContext } from "react"
 import * as api from '../../services/api/data'
 
 const Navigation = () => {
-    const { userData, setUserData } = useContext(UserContext);
+    const { userData, setUserData } = useContext(MainContext);
     const nav = useNavigate();
 
     useEffect(() => {
@@ -28,12 +28,17 @@ const Navigation = () => {
     return (
         <ul className={cx(styles["nav-bar"])}>
 
+            <div className={styles["public-btns"]}>
             <li className={styles["nav-img"]} ><Link to="/"><img src={logo}></img></Link></li>
-            <li ><Link className={styles.button} to="/">CATEGORIES</Link></li>
-            <li ><Link className={styles.button} to="/profile">PROFILE</Link></li>
+            <li ><Link className={cx(styles.button, styles["categories-btn"])} to="/categories">CATEGORIES</Link></li>
+            </div>
+           
+            
             {userData.token ?
                 <>
                     <p className={styles['greeting']}>Welcome, {userData.email}</p>
+                    <li ><Link className={styles.button} to="/mypublications">MY PUBLICATIONS</Link></li>
+                    <li ><Link className={cx(styles.button, styles.login)} to="/add">ADD PUBLICATION</Link></li>
                     <li onClick={onLogout} className={cx(styles.button, styles.register)}>LOGOUT</li>
                 </> :
                 <>

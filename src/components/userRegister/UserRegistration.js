@@ -1,12 +1,12 @@
 import cx from "classnames"
 import styles from './UserRegistration.module.css'
 import * as api from '../../services/api/data'
-import { UserContext } from "../../contexts/userContext"
-import {useContext} from "react"
+import { MainContext } from "../../contexts/mainContext"
+import { useContext } from "react"
 import { useNavigate } from 'react-router-dom'
 
 const UserRegistration = () => {
-    const { userData, setUserData } = useContext(UserContext);
+    const { userData, setUserData } = useContext(MainContext);
     const nav = useNavigate();
 
     const onRegister = async (e) => {
@@ -21,7 +21,7 @@ const UserRegistration = () => {
         const storedData = localStorage.getItem("userData");
         setUserData(JSON.parse(storedData));
         nav("/");
-        
+
     }
 
     return (
@@ -32,7 +32,7 @@ const UserRegistration = () => {
                 {/* <label for="password">Password:</label> */}
                 <input type="password" id="password" name="password" placeholder="Password" />
                 <input type="password" id="re-pass" name="password" placeholder="Repeat Password" />
-                <input onClick={onRegister} className={styles.button} type="submit" value="SUBMIT"/>
+                <input onClick={onRegister} className={styles.button} type="submit" value="SUBMIT" />
             </form>
         </div>
     );

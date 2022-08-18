@@ -1,0 +1,9 @@
+.container {
+    border-top: 2px solid navy;
+    height:18.2vh;
+    position: absolute;
+    bottom: - 160px;
+
+    width: 90%;
+    margin: auto;
+}
