@@ -78,3 +78,12 @@ h1 {
   max-width: 100%
     
 }
+
+p.error {
+    color: red;
+    font-style: italic;
+    margin-bottom: 20px;
+  
+    display: inline
+}
+

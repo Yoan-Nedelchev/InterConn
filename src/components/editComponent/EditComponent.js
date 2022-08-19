@@ -7,6 +7,13 @@ import Datetime from 'react-datetime';
 import moment from 'moment'
 
 const EditComponent = () => {
+    const nav = useNavigate()
+    const { id } = useParams();
+
+    // STATES
+    const [publication, setPublication] = useState()
+    const [startingDate, onChangeStart] = useState(new Date())
+    const [endDate, onChangeEnd] = useState(new Date())
     const [errors, setErrors] = useState({
         titlePassed: true,
         descriptionPassed: true,
@@ -16,20 +23,6 @@ const EditComponent = () => {
         datePassed: true
     })
     
-    let titlePassed = true
-    let descriptionPassed = true
-    let locationPassed = true
-    let contactInfoPassed = true
-    let aboutPassed = true
-    let datePassed = true
-
-    const nav = useNavigate()
-    const { id } = useParams();
-    const [publication, setPublication] = useState()
-
-    const [startingDate, onChangeStart] = useState(new Date())
-    const [endDate, onChangeEnd] = useState(new Date())
-
     useEffect(() => {
         const firstDate = new Date(startingDate)
         const secondDate = new Date(endDate)
@@ -51,6 +44,7 @@ const EditComponent = () => {
 
     },[startingDate, endDate])
 
+    // FETCHES CURRENT PUBLICATION
     useEffect(() => {
         const fetchPublication = async () => {
             const publication = await getById(id)
@@ -63,8 +57,7 @@ const EditComponent = () => {
         fetchPublication()
     }, [])
 
-
-
+    // CHANGES THE CURRENT PUBLICATION'S STATE UPON CHANGE IN ANY INPUT FIELD
     const changeHandler = (e) => {
         const formData = new FormData(e.target.parentElement);
         const title = formData.get("title")
@@ -99,14 +92,13 @@ const EditComponent = () => {
                         endDate,
                     }
         console.log(data)
-        setPublication(publication => data)
+        setPublication(() => data)
     }
 
-    
+    // CHECKS THE ERROR STATE BEFORE FIRING
     const onEdit = async (e) => {
         e.preventDefault();
         console.log(publication)
-        console.log(titlePassed)
 
         setTimeout(async () => {
             console.log("ok")
@@ -118,7 +110,7 @@ const EditComponent = () => {
             }
           }, 0)
         }
-
+        // CHECKS ALL FIELDS FOR ERROR SIMULTANEOUSLY ON BLUR OF ANY INPUT FIELD
         const onBlur = () => {
 
             const startingDateCheck = new Date(publication.startingDate)
@@ -166,8 +158,6 @@ const EditComponent = () => {
             }
         }
        
-
-
     return (
         <>
         { publication ? <div className={styles.container}>
@@ -188,8 +178,9 @@ const EditComponent = () => {
                 <textarea id="descr" name="descr" rows="3" placeholder="Description" defaultValue={publication.description} onBlur={onBlur}/>
                 {!errors.descriptionPassed ? <p className={styles.error}>Description must be at least 10 characters long</p> : null}
                 <input type="text" id="location" name="location" placeholder="Location" defaultValue={publication.location} onBlur={onBlur}/>
-                <input type="text" id="imageUrl" name="imageUrl" placeholder="imageUrl" defaultValue={publication.imageUrl}/>
                 {!errors.locationPassed ? <p className={styles.error}>Location must be at least two characters long</p> : null}
+                <input type="text" id="imageUrl" name="imageUrl" placeholder="imageUrl" defaultValue={publication.imageUrl}/>
+  
                 <div className={styles["date-time"]}>
                     <div className={styles.start}>
                         <label>Start</label>
