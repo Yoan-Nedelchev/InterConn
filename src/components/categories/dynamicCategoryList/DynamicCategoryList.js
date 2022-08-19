@@ -15,33 +15,6 @@ const DynamicCategoryList = () => {
 
     const { currentPublications, setPublications } = useContext(MainContext)
     const [loading, setLoading] = useState(true)
-    // useEffect(() => {
-    //     const getData = async () => {
-    //         let data = {}
-    //         if (currentView == "meetups") {
-    //             data = await api.getAllPublications("meetups")
-    //         } else if (currentView == "learning") {
-    //             data = await api.getAllPublications("learning")
-    //         }
-    //         else if (currentView == "sports") {
-    //             data = await api.getAllPublications("sports")
-    //         }
-    //         else if (currentView == "music") {
-    //             data = await api.getAllPublications("music")
-    //         }
-    //         else if (currentView == "travel") {
-    //             data = await api.getAllPublications("travel")
-    //         }
-    //         else if (currentView == "networking") {
-    //             data = await api.getAllPublications("networking")
-    //         }
-    //         else if (currentView == "other") {
-    //             data = await api.getAllPublications("other")
-    //         }
-    //         setPublications(data)
-    //     }
-    //     getData()
-    // }, []);
 
     useEffect(() => {
         const getData = async () => {

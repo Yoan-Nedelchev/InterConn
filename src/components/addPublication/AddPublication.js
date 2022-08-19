@@ -3,11 +3,16 @@ import * as api from '../../services/api/data'
 import DateTimePicker from 'react-datetime-picker'
 import React, { useState } from 'react';
 import Datetime from 'react-datetime';
+import { useNavigate } from 'react-router-dom'
 
 const AddPublication = () => {
     const [startingDate, onChangeStart] = useState(new Date())
     const [endDate, onChangeEnd] = useState(new Date())
-    const onSubmit = (e) => {
+
+    const nav = useNavigate()
+
+    const onSubmit = async (e) => {
+
         e.preventDefault();
         const formData = new FormData(e.target.parentElement);
 
@@ -15,6 +20,9 @@ const AddPublication = () => {
         const category = formData.get("category")
         const description = formData.get("descr")
         const location = formData.get("location")
+        const imageUrl = formData.get("imageUrl")
+        const contactInfo = formData.get("contactInfo")
+        const about = formData.get("about")
 
         console.log(startingDate)
 
@@ -30,29 +38,26 @@ const AddPublication = () => {
 
         console.log(filledEndDate)
 
-        // const filledEndDate = endDate.split("")[0] 
-        // const filledStartTime = startingDate.slice(-6, -13)
-        // const filledEndTime = endDate.split(-6, -13)
-
-        // const date = filledStartDate + " " + filledStartTime
-        // const time = filledEndDate + " " + filledEndTime
-
-        const contactInfo = formData.get("contactInfo")
-        const about = formData.get("about")
+   
 
         const data = {
             title,
             description,
             location,
-            date: startCombined,
-            time: endCombined,
+            imageUrl,
+            start: startCombined,
+            end: endCombined,
             contactInfo,
             about,
             category, 
             startingDate,
             endDate,
         }
-        return api.createPublication(data)
+        const res = await api.createPublication(data)
+        const id = res._id
+        console.log(res)
+        nav(`/categories/${data.category}/${id}`)
+
     }
 
     return (
@@ -74,6 +79,7 @@ const AddPublication = () => {
                 </select>
                 <textarea id="descr" name="descr" rows="3" placeholder="Description" />
                 <input type="text" id="location" name="location" placeholder="Location" />
+                <input type="text" id="imageUrl" name="imageUrl" placeholder="imageUrl" />
                 <div className={styles["date-time"]}>
                     <div className={styles.start}>
                         <label>Start</label>

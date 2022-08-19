@@ -45,7 +45,7 @@ const EditComponent = () => {
         const endCombined = filledEndDate + ", " + filledEndTime + "h"
 
         console.log(firstDate)
-        const newPublication = {...publication, startingDate: firstDate, endDate: secondDate, date: startCombined, time: endCombined}
+        const newPublication = {...publication, startingDate: firstDate, endDate: secondDate, start: startCombined, end: endCombined}
         console.log(newPublication)
         setPublication(publication => newPublication)
 
@@ -71,6 +71,7 @@ const EditComponent = () => {
         const category = formData.get("category")
         const description = formData.get("descr")
         const location = formData.get("location")
+        const imageUrl = formData.get("imageUrl")
         const contactInfo = formData.get("contactInfo")
         const about = formData.get("about")
 
@@ -88,8 +89,9 @@ const EditComponent = () => {
                         title, 
                         description, 
                         location, 
-                        date: startCombined,
-                        time: endCombined, 
+                        imageUrl,
+                        start: startCombined,
+                        end: endCombined, 
                         contactInfo,
                         about,
                         category,
@@ -186,6 +188,7 @@ const EditComponent = () => {
                 <textarea id="descr" name="descr" rows="3" placeholder="Description" defaultValue={publication.description} onBlur={onBlur}/>
                 {!errors.descriptionPassed ? <p className={styles.error}>Description must be at least 10 characters long</p> : null}
                 <input type="text" id="location" name="location" placeholder="Location" defaultValue={publication.location} onBlur={onBlur}/>
+                <input type="text" id="imageUrl" name="imageUrl" placeholder="imageUrl" defaultValue={publication.imageUrl}/>
                 {!errors.locationPassed ? <p className={styles.error}>Location must be at least two characters long</p> : null}
                 <div className={styles["date-time"]}>
                     <div className={styles.start}>

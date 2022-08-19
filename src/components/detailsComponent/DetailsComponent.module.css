@@ -22,7 +22,7 @@
 }
 
 .image-container {
-    margin-right: 0px;
+    margin-right: 20px;
     width:40%;
     margin-top: 26px;
 
@@ -169,4 +169,8 @@ h2 {
 textarea {
     text-align: left;
     padding: 20px
+}
+
+.button {
+    background: red;
 }

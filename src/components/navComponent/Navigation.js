@@ -7,6 +7,8 @@ import { useEffect } from 'react'
 import { MainContext } from "../../contexts/mainContext"
 import { useContext } from "react"
 import * as api from '../../services/api/data'
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'
 
 const Navigation = () => {
     const { userData, setUserData } = useContext(MainContext);
@@ -18,10 +20,30 @@ const Navigation = () => {
         }
     }, [userData]);
     
+
+    const submit = () => {
+        confirmAlert({
+          title: `LOG-OUT`,
+          message: 'Are you sure you want log-out?',
+          buttons: [
+            {
+              label: 'Yes',
+              onClick: () => {
+                api.logout();
+                setUserData({});
+              }
+            },
+            {
+              label: 'Cancel',
+                }
+          ]
+        });
+      };
+
     const onLogout = async (e) => {
-        e.preventDefault();
-        await api.logout();
-        setUserData({});
+        submit()
+        
+
     }
 
 
@@ -39,7 +61,7 @@ const Navigation = () => {
                     <p className={styles['greeting']}>Welcome, {userData.email}</p>
                     <li ><Link className={styles.button} to="/mypublications">MY PUBLICATIONS</Link></li>
                     <li ><Link className={cx(styles.button, styles.login)} to="/add">ADD PUBLICATION</Link></li>
-                    <li onClick={onLogout} className={cx(styles.button, styles.register)}>LOGOUT</li>
+                    <li onClick={onLogout} className={cx(styles.button, styles.register)}>LOG-OUT</li>
                 </> :
                 <>
                     <li><Link className={cx(styles.button, styles.register)} to="/register">REGISTER</Link></li>

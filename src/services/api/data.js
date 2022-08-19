@@ -28,6 +28,9 @@ export async function getComments(publicationId) {
     return api.get(`/data/comments?where=publicationId%3D%22${publicationId}%22`)
 }
 
+export async function getUserPublications(userId) {
+    return api.get(`/data/publications?where=_ownerId%3D%22${userId}%22&sortBy=_createdOn%20desc`)
+}
 // export async function search(query) {
 //     return api.get(`/data/cars?where=year%3D${query}`)
 // }
@@ -41,8 +44,7 @@ export async function getComments(publicationId) {
 // export async function deleteListing(id) {
 //     return api.del('/data/cars/' + id)
 // }
-// export async function getUserListings(userId) {
-//     return api.get(`/data/cars?where=_ownerId%3D%22${userId}%22&sortBy=_createdOn%20desc`)
+
 
 // }
 

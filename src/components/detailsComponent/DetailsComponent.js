@@ -5,14 +5,16 @@ import { useEffect, useState } from 'react'
 import { MainContext } from "../../contexts/mainContext"
 import { useContext } from "react"
 import { Link, useNavigate } from 'react-router-dom'
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'
 
 
 const DetailsComponent = () => {
     const { userData, setChosenPublication } = useContext(MainContext)
     const { id } = useParams();
 
-    const [publication, setPublication] = useState()
-    const [comments, setComments] = useState()
+    const [publication, setPublication] = useState({})
+    const [comments, setComments] = useState({})
 
     const editURL = `/edit/${id}`
 
@@ -38,9 +40,28 @@ const DetailsComponent = () => {
         e.preventDefault()
     }
 
+    const submit = () => {
+        confirmAlert({
+          title: `Publication named "${publication.title}" will be deleted.`,
+          message: 'Are you sure you want to proceed?',
+          buttons: [
+            {
+              label: 'Yes',
+              onClick: () => {
+                deletePublication(id)
+                nav("/")
+              }
+            },
+            {
+              label: 'Cancel',
+                }
+          ]
+        });
+      };
+    
     const onDelete = async () => {
-        await deletePublication(id)
-        nav("/")
+        submit()
+
     }
     const onAdd = async (e) => {
         e.preventDefault()
@@ -65,15 +86,15 @@ const DetailsComponent = () => {
                     <h2 className={styles.title}>{publication.title}</h2>
                     <div className={styles["main-container"]}>
                         <div className={styles["image-container"]}>
-                            <img className={styles.image} src="https://www.tarasportrafting.com/sites/default/files/styles/front_big/public/3_raft_b_ps.jpg?itok=BV0dLv8G"></img>
+                            <img className={styles.image} src={publication.imageUrl}></img>
                         </div>
                         <div className={styles["data-container"]}>
 
                             <ul className={styles.data}>
                                 <li><span>Description: </span>{publication.description}</li>
                                 <li><span>Location: </span>{publication.location}</li>
-                                <li><span>Start: </span>{publication.date}</li>
-                                <li><span>End: </span>{publication.time}</li>
+                                <li><span>Start: </span>{publication.start}</li>
+                                <li><span>End: </span>{publication.end}</li>
 
                                 {(publication._ownerId == userData.id) ?
                                     <>
@@ -94,9 +115,9 @@ const DetailsComponent = () => {
                     </section>
 
                     <div className={styles["comments-section"]}>
-                        <h2 className={styles["comments-title"]}>COMMENTS</h2>
+                        <h2 className={styles["comments-title"]}>COMMENTS SECTION</h2>
                         <div className={styles["comments-container"]}>
-                            {comments ? comments.map(comment => <p key={comment._id} className={styles.comment}>{comment.email}: {comment.comment} </p>) : null}
+                            {comments.length > 0 ? comments.map(comment => <p key={comment._id} className={styles.comment}>{comment.email}: {comment.comment} </p>) : <p>No comments yet</p>}
                         </div>
                         <div className={styles["add-comment-container"]}>
                             {userData.token ?
@@ -108,7 +129,7 @@ const DetailsComponent = () => {
                                     </form>
 
                                 </>
-                                : <h2>Log in to write a comment</h2>}
+                                : <p>Log in to write a comment</p>}
 
                         </div>
                     </div>
