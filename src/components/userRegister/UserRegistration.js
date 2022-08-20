@@ -2,36 +2,95 @@ import cx from "classnames"
 import styles from './UserRegistration.module.css'
 import * as api from '../../services/api/data'
 import { MainContext } from "../../contexts/mainContext"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from 'react-router-dom'
 
 const UserRegistration = () => {
+    const [filledData, setFilledData] = useState({
+        email: "",
+        password: "",
+        repass: "",
+    })
+
+    const [errors, setErrors] = useState({
+        emailPassed: true,
+        passwordPassed: true,
+        repassPassed: true,
+        passwordsMatched: true,
+    })
+
     const { userData, setUserData } = useContext(MainContext);
     const nav = useNavigate();
 
     const onRegister = async (e) => {
         e.preventDefault();
-        const data = new FormData(e.target.parentElement)
+        const allPassed = Object.values(errors).every(
+            value => value === true
+        )
+        if (allPassed) {
+            await api.register(filledData.email, filledData.password);
+            const storedData = localStorage.getItem("userData");
+            setUserData(JSON.parse(storedData));
+            nav("/");
+        } else {
+            alert("Incorrectly filled fields")
+        }
 
+    }
+
+    const onChange = (e) => {
+        const data = new FormData(e.target.parentElement);
+ 
         const email = data.get("email");
         const password = data.get("password");
-        const repass = data.get("repass");
+        const repass = data.get("password");
+        const finalData = {
+            email, password, repass
+        }
+        setFilledData(() => finalData)
+        console.log(filledData)
+    }
 
-        await api.register(email, password);
-        const storedData = localStorage.getItem("userData");
-        setUserData(JSON.parse(storedData));
-        nav("/");
-
+    const onBlur = (e) => {
+        if (e.target.id == "email") {
+            if (e.target.value == "") {
+                setErrors((errors) => ({ ...errors, emailPassed: false }))
+            } else {
+                setErrors((errors) => ({ ...errors, emailPassed: true }))
+            }
+        } else if (e.target.id == "password") {
+            if (e.target.value == "") {
+                setErrors((errors) => ({ ...errors, passwordPassed: false }))
+            } else {
+                setErrors((errors) => ({ ...errors, passwordPassed: true }))
+            }
+        } else if (e.target.id == "repass") {
+            if (e.target.value == "") {
+                setErrors((errors) => ({ ...errors, repassPassed: false }))
+                setErrors((errors) => ({ ...errors, passwordsMatched: true }))
+            } else {
+                if (e.target.value != filledData.password) { 
+                    setErrors((errors) => ({ ...errors, passwordsMatched: false }))
+                    setErrors((errors) => ({ ...errors, repassPassed: true }))
+                } else {
+                    setErrors((errors) => ({ ...errors, passwordsMatched: true }))
+                }
+            }
+        }
     }
 
     return (
         <div className={styles.container}>
-            <form className={styles['register-form']}>
+            <form onChange={onChange} onBlur={onBlur} className={styles['register-form']}>
                 {/* <label for="username">Username:</label> */}
                 <input type="text" id="email" name="email" placeholder="Email" />
+                {!errors.emailPassed ? <p className={styles.error}>Required field</p> : null}
                 {/* <label for="password">Password:</label> */}
                 <input type="password" id="password" name="password" placeholder="Password" />
-                <input type="password" id="re-pass" name="password" placeholder="Repeat Password" />
+                {!errors.passwordPassed ? <p className={styles.error}>Required field</p> : null}
+                <input type="password" id="repass" name="repass" placeholder="Repeat Password" />
+                {!errors.repassPassed ? <p className={styles.error}>Required field</p> : null}
+                {!errors.passwordsMatched ? <p className={styles.error}>Psswords must match</p> : null}
                 <input onClick={onRegister} className={styles.button} type="submit" value="SUBMIT" />
             </form>
         </div>

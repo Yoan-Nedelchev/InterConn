@@ -36,3 +36,10 @@ input {
     text-align: center;
     
 }
+
+p.error {
+    color: red;
+    font-style: italic;
+    margin-bottom: 10px;
+    display: inline
+}

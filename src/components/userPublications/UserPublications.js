@@ -12,17 +12,16 @@ const UserPublications = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const data = await api.getAllPublications()
-            setUserPublications(() => data.filter(publication => publication._ownerId == userData.id))
+            setUserPublications(() => currentPublications.filter(publication => publication._ownerId == userData.id))
             console.log(userPublications)
         }
 
         const getUserPublications = async () => {
-            const userPublicationsFromServer = await api.getUserPublications()
+            const userPublicationsFromServer = await api.getUserPublications(userData.id)
             setUserPublications(() => userPublicationsFromServer)
         }
 
-        if (currentPublications) {
+        if (currentPublications.length > 0) {
             getData()
         } else {
             getUserPublications()
