@@ -20,7 +20,8 @@ const EditComponent = () => {
         locationPassed: true,
         contactInfoPassed: true,
         aboutPassed: true,
-        datePassed: true
+        datePassed: true,
+        categoryPassed: true,
     })
     
     useEffect(() => {
@@ -102,7 +103,7 @@ const EditComponent = () => {
 
         setTimeout(async () => {
             console.log("ok")
-            if (errors.titlePassed && errors.descriptionPassed && errors.locationPassed && errors.contactInfoPassed && errors.aboutPassed && errors.datePassed) {
+            if (errors.titlePassed && errors.descriptionPassed && errors.locationPassed && errors.contactInfoPassed && errors.aboutPassed && errors.datePassed && errors.categoryPassed) {
                 await editPublication(id, publication)
                 nav(`/categories/${publication.category}/${id}`)
             } else {
@@ -124,6 +125,13 @@ const EditComponent = () => {
             } else {
 
                 setErrors((errors)=>({...errors, titlePassed: true}))
+            }
+
+            if (publication.category == "" || publication.category == undefined || publication.category == "Category") {
+                debugger
+                setErrors((errors) => ({ ...errors, categoryPassed: false }))
+            } else {
+                setErrors((errors) => ({ ...errors, categoryPassed: true }))
             }
 
             if (publication.description.length < 10) {
@@ -165,7 +173,7 @@ const EditComponent = () => {
         <form onSubmit={onEdit} onChange={changeHandler} className={styles['login-form']}>
                 <input type="text" id="title" name="title" placeholder="Title" defaultValue={publication.title} onBlur={onBlur}/>
                 {!errors.titlePassed ? <p className={styles.error}>Title must be at least 2 characters long</p> : null}
-                <select className={styles.categories} name="category" id="category" value={publication.category}>
+                <select className={styles.categories} name="category" id="category" value={publication.category} onBlur={onBlur}>
                     <option value="Category">Select a category</option>
                     <option value="Meetups">Meetups and Nightlife</option>
                     <option value="Learning">Learning and Education</option>
@@ -175,6 +183,7 @@ const EditComponent = () => {
                     <option value="Networking">Networking</option>
                     <option value="Other">Other</option>
                 </select>
+                {!errors.categoryPassed ? <p className={styles.error}>Required field</p> : null}
                 <textarea id="descr" name="descr" rows="3" placeholder="Description" defaultValue={publication.description} onBlur={onBlur}/>
                 {!errors.descriptionPassed ? <p className={styles.error}>Description must be at least 10 characters long</p> : null}
                 <input type="text" id="location" name="location" placeholder="Location" defaultValue={publication.location} onBlur={onBlur}/>

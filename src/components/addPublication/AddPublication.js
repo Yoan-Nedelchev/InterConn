@@ -26,7 +26,8 @@ const AddPublication = () => {
         locationPassed: true,
         contactInfoPassed: true,
         aboutPassed: true,
-        datePassed: true
+        datePassed: true,
+        categoryPassed: true,
     })
     // HOOK THAT CHANGES THE PUBLICATION STATE, DEPENDING ON CHANGES IN DATES
     useEffect(() => {
@@ -122,6 +123,15 @@ const AddPublication = () => {
                     setErrors((errors) => ({ ...errors, titlePassed: true }))
                 }
             }
+            if (e.target.id == 'category') {
+                debugger
+                if (publication.category == "" || publication.category == undefined || publication.category == "Category") {
+                    setErrors((errors) => ({ ...errors, categoryPassed: false }))
+                    console.log("bad category")
+                } else {
+                    setErrors((errors) => ({ ...errors, categoryPassed: true }))
+                }
+            }
             if (e.target.id == 'descr') {
                 if (publication.description.length < 10) {
                     setErrors((errors) => ({ ...errors, descriptionPassed: false }))
@@ -158,7 +168,7 @@ const AddPublication = () => {
         }
     }
 
-    // submitValidation IS USED TO VALIDATE ALL FIELDS AT ONCE UPON VALIDATION
+    // submitValidation IS USED TO VALIDATE ALL FIELDS AT ONCE UPON
     const submitValidation = () => {
 
         const startingDateCheck = new Date(publication.startingDate)
@@ -169,6 +179,12 @@ const AddPublication = () => {
             setErrors((errors) => ({ ...errors, titlePassed: false }))
         } else {
             setErrors((errors) => ({ ...errors, titlePassed: true }))
+        }
+        if (publication.category == "" || publication.category == undefined || publication.category == "Category") {
+            debugger
+            setErrors((errors) => ({ ...errors, categoryPassed: false }))
+        } else {
+            setErrors((errors) => ({ ...errors, categoryPassed: true }))
         }
         if (publication.description.length < 10) {
             setErrors((errors) => ({ ...errors, descriptionPassed: false }))
@@ -202,10 +218,11 @@ const AddPublication = () => {
 
         <div className={styles.container}>
             <h1>ADD A PUBLICATION</h1>
+            
             <form onSubmit={onSubmit} onChange={changeHandler} className={styles['login-form']}>
                 <input type="text" id="title" name="title" placeholder="Title" defaultValue={publication.title} onBlur={onBlur} />
                 {!errors.titlePassed ? <p className={styles.error}>Title must be at least 2 characters long</p> : null}
-                <select className={styles.categories} name="category" id="category" value={publication.category}>
+                <select className={styles.categories} name="category" id="category" defaultValue={publication.category} onBlur={onBlur}>
                     <option value="Category">Select a category</option>
                     <option value="Meetups">Meetups and Nightlife</option>
                     <option value="Learning">Learning and Education</option>
@@ -215,6 +232,7 @@ const AddPublication = () => {
                     <option value="Networking">Networking</option>
                     <option value="Other">Other</option>
                 </select>
+                {!errors.categoryPassed ? <p className={styles.error}>Required field</p> : null}
                 <textarea id="descr" name="descr" rows="3" placeholder="Description" defaultValue={publication.description} onBlur={onBlur} />
                 {!errors.descriptionPassed ? <p className={styles.error}>Description must be at least 10 characters long</p> : null}
                 <input type="text" id="location" name="location" placeholder="Location" defaultValue={publication.location} onBlur={onBlur} />

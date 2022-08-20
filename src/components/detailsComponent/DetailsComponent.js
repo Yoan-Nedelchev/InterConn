@@ -15,6 +15,7 @@ const DetailsComponent = () => {
 
     const [publication, setPublication] = useState({})
     const [comments, setComments] = useState({})
+    const [writtenComment, setWrittenComment] = useState("")
 
     const editURL = `/edit/${id}`
 
@@ -42,40 +43,47 @@ const DetailsComponent = () => {
 
     const submit = () => {
         confirmAlert({
-          title: `Publication named "${publication.title}" will be deleted.`,
-          message: 'Are you sure you want to proceed?',
-          buttons: [
-            {
-              label: 'Yes',
-              onClick: () => {
-                deletePublication(id)
-                nav("/")
-              }
-            },
-            {
-              label: 'Cancel',
+            title: `Publication named "${publication.title}" will be deleted.`,
+            message: 'Are you sure you want to proceed?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        deletePublication(id)
+                        nav("/")
+                    }
+                },
+                {
+                    label: 'Cancel',
                 }
-          ]
+            ]
         });
-      };
-    
+    };
+
     const onDelete = async () => {
         submit()
 
     }
+
+    const commentHandler = (e) => {
+        setWrittenComment(e.target.value)
+        console.log(writtenComment)
+    }
     const onAdd = async (e) => {
         e.preventDefault()
         console.log("ok")
-        const data = new FormData(e.target)
-        const comment = data.get("comment")
         const toSend = {
             publicationId: id,
-            comment,
+            comment: writtenComment,
             email: userData.email
         }
         await addComment(toSend)
+ 
+        console.log(writtenComment)
         const comments = await getComments(id)
         setComments(comments)
+        debugger
+        setWrittenComment("")
 
     }
 
@@ -124,7 +132,7 @@ const DetailsComponent = () => {
                                 <>
                                     <h2>ADD COMMENT</h2>
                                     <form onSubmit={onAdd} className={styles['add-form']}>
-                                        <textarea name="comment" rows="6"></textarea>
+                                        <textarea name="comment" rows="6" onChange={commentHandler} value={writtenComment}></textarea>
                                         <input className={styles["add-button"]} type="submit" value="Add" />
                                     </form>
 
