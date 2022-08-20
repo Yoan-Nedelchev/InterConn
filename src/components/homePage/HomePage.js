@@ -1,6 +1,7 @@
 import styles from './HomePage.module.css'
 import { useState, useEffect } from 'react'
 import WeatherComponent from '../weatherComponent/WeatherComponent';
+import { Link } from 'react-router-dom'
 
 
 const HomePage = () => {
@@ -29,7 +30,7 @@ const HomePage = () => {
                 <p classname={styles["header-par"]}>The best platform for shared adventures!</p>
                 <p classname={styles["header-par"]}>Our mission is connecting people. Here you're free to express yourself and find those who are like you! </p>
                 <p classname={styles["header-par"]}></p>
-                <button className={styles.button}>LEARN MORE</button>
+                <button className={styles.button}><Link to="/about">LEARN MORE</Link></button>
             </div>
             <div className={styles["weather-div"]}>
                 <h2>Before browsing activities, don't forget to check the weather!</h2>

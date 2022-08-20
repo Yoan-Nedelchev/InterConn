@@ -1,6 +1,7 @@
 import styles from "./Footer.module.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
     return (
@@ -20,7 +21,7 @@ const Footer = () => {
                     <FontAwesomeIcon icon={faInstagram} size="xl" />
                     <FontAwesomeIcon icon={faTwitter} size="xl" />
                 </div>
-                <button className={styles.about}>ABOUT US</button>
+                <button className={styles.about}><Link to="/about">ABOUT US</Link></button>
             </div>
 
         </div>

@@ -12,6 +12,7 @@ import DetailsComponent from './components/detailsComponent/DetailsComponent'
 import DynamicCategoryList from './components/categories/dynamicCategoryList/DynamicCategoryList'
 import AddPublication from './components/addPublication/AddPublication'
 import EditComponent from './components/editComponent/EditComponent'
+import AboutUsComponent from './components/aboutUsComponent/AboutUs'
 
 import {
   BrowserRouter,
@@ -36,6 +37,7 @@ function App() {
               <Route path="/register" element={<UserRegistration />} />
               <Route path="/login" element={<UserLogin />} />
               <Route path="/add" element={<AddPublication />} />
+              <Route path="/about" element={<AboutUsComponent />} />
               <Route path="/mypublications"  >
                 <Route index element={<UserPublications />} />
                 <Route path=":id" element={<DetailsComponent />} />
