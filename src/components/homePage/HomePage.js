@@ -12,6 +12,8 @@ const HomePage = () => {
             const response =
                 await fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/sofia?unitGroup=metric&include=days&key=96YF6XLPP8756GDEAW8J23LVC&contentType=json")
             let result = await response.json()
+            debugger
+            console.log(result)
             let finalData = []
             result = result.days.slice(0, 5)
             for (const value of Object.values(result)) {
