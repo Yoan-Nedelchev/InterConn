@@ -43,3 +43,8 @@ p.error {
     margin-bottom: 10px;
     display: inline
 }
+
+.title {
+    font-size: 25px;
+    font-weight: 500;
+}

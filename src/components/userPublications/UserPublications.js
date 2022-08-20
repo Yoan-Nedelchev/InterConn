@@ -6,31 +6,29 @@ import { useContext } from "react"
 
 const UserPublications = () => {
 
-    const { userData, currentPublications } = useContext(MainContext);
+    const { userData } = useContext(MainContext);
 
     const [userPublications, setUserPublications] = useState()
 
     useEffect(() => {
-        const getData = async () => {
-            setUserPublications(() => currentPublications.filter(publication => publication._ownerId == userData.id))
-            console.log(userPublications)
-        }
+        // const getData = async () => {
+        //     setUserPublications(() => currentPublications.filter(publication => publication._ownerId == userData.id))
+        //     console.log(userPublications)
+        // }
 
         const getUserPublications = async () => {
             const userPublicationsFromServer = await api.getUserPublications(userData.id)
+            console.log(userPublicationsFromServer)
             setUserPublications(() => userPublicationsFromServer)
-        }
+        // }
 
-        if (currentPublications.length > 0) {
-            getData()
-        } else {
-            getUserPublications()
+        // if (currentPublications.length > 0) {
+        //     getData()
+        // } else {
         }
-
-        console.log(currentPublications)
+        getUserPublications()
     }, []);
 
-    console.log(userPublications)
     return (
         <>
             {userPublications ?

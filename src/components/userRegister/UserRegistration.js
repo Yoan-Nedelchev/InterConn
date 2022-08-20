@@ -24,15 +24,30 @@ const UserRegistration = () => {
 
     const onRegister = async (e) => {
         e.preventDefault();
+
+        if (filledData.email == "") {
+            setErrors((errors) => ({ ...errors, emailPassed: false }))
+        }  
+        if (filledData.password == "") {
+            setErrors((errors) => ({ ...errors, passwordPassed: false }))
+        } 
+        if (filledData.repass == "") {
+            debugger
+            setErrors((errors) => ({ ...errors, repassPassed: false }))
+        }
+        
         const allPassed = Object.values(errors).every(
             value => value === true
         )
-        if (allPassed) {
+        
+        if (allPassed &&  filledData.email.length > 0 && filledData.password.length > 0 && filledData.repass.length > 0) {
+            
             await api.register(filledData.email, filledData.password);
             const storedData = localStorage.getItem("userData");
             setUserData(JSON.parse(storedData));
             nav("/");
         } else {
+            
             alert("Incorrectly filled fields")
         }
 
@@ -82,6 +97,7 @@ const UserRegistration = () => {
     return (
         <div className={styles.container}>
             <form onChange={onChange} onBlur={onBlur} className={styles['register-form']}>
+                <h1 className={styles.title}>REGISTER</h1>
                 {/* <label for="username">Username:</label> */}
                 <input type="text" id="email" name="email" placeholder="Email" />
                 {!errors.emailPassed ? <p className={styles.error}>Required field</p> : null}

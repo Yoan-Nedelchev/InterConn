@@ -38,7 +38,7 @@ const UserLogin = () => {
 
     const onChange = (e) => {
         const data = new FormData(e.target.parentElement);
- 
+
         const email = data.get("email");
         const password = data.get("password");
         const finalData = {
@@ -66,7 +66,9 @@ const UserLogin = () => {
 
     return (
         <div className={styles.container}>
+
             <form onChange={onChange} onBlur={onBlur} className={styles['login-form']}>
+                <h1 className={styles.title}>LOG-IN</h1>
                 {/* <label for="username">Username:</label> */}
                 <input type="text" id="email" name="email" placeholder="Email" defaultValue={filledData.email} />
                 {!errors.emailPassed ? <p className={styles.error}>Required field</p> : null}
