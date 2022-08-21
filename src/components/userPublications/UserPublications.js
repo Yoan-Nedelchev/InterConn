@@ -34,7 +34,7 @@ const UserPublications = () => {
             {userPublications ?
                 <div className="container">
                    <h1>MY PUBLICATIONS</h1>
-                    <>{userPublications.map((publication) => <CategoryComponent key={publication._id} publication={publication} />)}</>
+                    <>{userPublications.length > 0 ? userPublications.map((publication) => <CategoryComponent key={publication._id} publication={publication} />) : <h2>No publications yet.</h2>}</>
                 </div>
                 :
                 <h1>Loading</h1>}

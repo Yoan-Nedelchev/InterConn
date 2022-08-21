@@ -89,6 +89,7 @@ const UserRegistration = () => {
                     setErrors((errors) => ({ ...errors, repassPassed: true }))
                 } else {
                     setErrors((errors) => ({ ...errors, passwordsMatched: true }))
+                    setErrors((errors) => ({ ...errors, repassPassed: true }))
                 }
             }
         }
